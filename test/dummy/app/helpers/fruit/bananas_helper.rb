@@ -1,0 +1,2 @@
+module Fruit::BananasHelper
+end
