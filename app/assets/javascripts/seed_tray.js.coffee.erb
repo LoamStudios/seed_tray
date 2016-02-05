@@ -1,4 +1,4 @@
-class @PageDelegator
+class SeedTray
     constructor: () ->
         if window.Turbolinks != undefined
             $(window).on "page:change", => @ready()
@@ -6,8 +6,7 @@ class @PageDelegator
             $(@ready)
         @root = <%= Rails.application.class.to_s.split('::').first %>
 
-    # Dynamically delegates ready to controller action specific ready methods
-    # based on the classes found on the page
+    # Dynamically delegate ready to controller#action specific ready methods
     ready: =>
         #  Run the page specific ready code
         @delegate_ready()
@@ -22,5 +21,9 @@ class @PageDelegator
         if @root[controller] && @root[controller][action]
             @root[controller][action].ready()
             console.info "Executed #{@root.name}.#{controller}.#{action}.ready()."
+        else
+            console.error "Couldn't find #{@root.name}.#{controller}.#{action}.ready()."
 
     site_wide_ready: ->
+
+<%= Rails.application.class.to_s.split('::').first %>.delegator = new SeedTray()
