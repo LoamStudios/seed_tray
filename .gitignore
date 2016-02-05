@@ -7,8 +7,3 @@
 /pkg/
 /spec/reports/
 /tmp/
-test/example_app/db/*.sqlite3
-test/example_app/db/*.sqlite3-journal
-test/example_app/log/*.log
-test/example_app/tmp/
-test/example_app/.sass-cache

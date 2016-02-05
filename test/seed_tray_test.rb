@@ -1,7 +1,11 @@
 require 'test_helper'
 
-class SeedTrayTest < ActiveSupport::TestCase
-  test "truth" do
-    assert_kind_of Module, SeedTray
+class SeedTrayTest < Minitest::Test
+  def test_that_it_has_a_version_number
+    refute_nil ::SeedTray::VERSION
+  end
+
+  def test_it_does_something_useful
+    assert false
   end
 end
