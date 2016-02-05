@@ -268,3 +268,24 @@ Completed 200 OK in 4ms (Views: 4.0ms | ActiveRecord: 0.0ms)
 SeedTrayTest: test_truth
 ------------------------
   [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+-------------------------------------------------------------------------------------
+Fruit::BananasControllerTest: test_helper_should_return_data_attribute_for_controller
+-------------------------------------------------------------------------------------
+Processing by Fruit::BananasController#index as HTML
+  Rendered fruit/bananas/index.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 233ms (Views: 233.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+------------------------
+SeedTrayTest: test_truth
+------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------------------------------------
+StaticPagesControllerTest: test_helper_should_return_data_attribute_for_controller
+----------------------------------------------------------------------------------
+Processing by StaticPagesController#index as HTML
+  Rendered static_pages/index.html.erb within layouts/application (0.2ms)
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.0ms)[0m  rollback transaction
