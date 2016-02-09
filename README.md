@@ -100,6 +100,14 @@ page. For example, if you were visiting /bananas/1, you'd get:
 </body>
 ```
 
+## Namespaced Controllers
+
+A controller named Admin::Dashboard becomes Admin_Dashboard in the convention.
+More generally, module/word_word_controller becomes Module_WordWord. We replace
+the scope operator with an underscore and CamelCase the controller name. See the
+[helper definition](https://github.com/LoamStudios/seed_tray/blob/master/lib/see
+d_tray/data_attribute_helper.rb#L3) for the exact details.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
