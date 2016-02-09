@@ -44,6 +44,8 @@ In each of these objects, you need to implement the `ready` method:
 In app/assets/javascript/bananas.js.coffee
 ``` coffeescript
 class @Fruit.Bananas
+    @ready: ->
+        # Custom coffeescript to run on every action
 
 class @Fruit.Bananas.Index
     @ready: ->
@@ -73,6 +75,10 @@ In application.js, require seed_tray *after* the rest of your JS is included.
 //= require seed_tray
 ```
 
+**HEADS UP:** Make sure your application object (`Fruit` from our
+example) is added before the rest of your code or else, you will get an
+undefined error.
+
 To finish the install, instantiate the app object in applications.js if you
 defined any methods or data on it:
 
@@ -80,7 +86,7 @@ defined any methods or data on it:
 var app = new Fruit();
 ```
 
-Add te data attributes to the 
+Add the data attributes to the 
 ```
 <body <%= page_data_attr %> >
 </body>
