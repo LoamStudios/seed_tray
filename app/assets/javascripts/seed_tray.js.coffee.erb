@@ -18,16 +18,19 @@ class SeedTray
         controller = $("[data-controller]").data("controller")
         action = $("[data-action").data("action")
 
-        if @root[controller]
+        if @root[controller] && ready_defined(@root[controller])
             @root[controller].ready()
         else
-            console.error "Couldn't find #{@root.name}.#{controller}.ready()."
+            console.info "Skipped #{@root.name}.#{controller}.ready()."
 
-        if @root[controller][action]
+        if @root[controller] && @root[controller][action] && ready_defined(@root[controller][action])
             @root[controller][action].ready()
             console.info "Executed #{@root.name}.#{controller}.#{action}.ready()."
         else
-            console.error "Couldn't find #{@root.name}.#{controller}.#{action}.ready()."
+            console.info "Skipped #{@root.name}.#{controller}.#{action}.ready()."
+
+    ready_defined: (object) ->
+        object.ready != undefined
 
     site_wide_ready: ->
 
