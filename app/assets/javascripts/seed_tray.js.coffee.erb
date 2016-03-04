@@ -18,7 +18,7 @@ class SeedTray
 
     delegate_ready: =>
         controller = $("[data-controller]").data("controller")
-        action = $("[data-action").data("action")
+        action = $("[data-action]").data("action")
 
         if @root[controller] && @ready_defined(@root[controller])
             @root[controller].ready()
