@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = Dir["test/**/*"]
   spec.files = Dir["{lib,app}/**/*"]
 
-  spec.add_dependency "rails", "~> 4.2.5"
+  spec.add_dependency "rails", ">= 4.0"
   spec.add_dependency 'jquery-rails'
 
   spec.add_development_dependency 'sass-rails', '~> 5.0'
