@@ -4,39 +4,39 @@ class SeedTray
     constructor: () ->
         if window.Turbolinks != undefined
             if Turbolinks.EVENTS != undefined
-                $(window).on "page:change", => @ready()
+                $(window).on "page:change", => @render()
             else
-                $(window).on "turbolinks:load", => @ready()
+                $(window).on "turbolinks:load", => @render()
         else
-            $(@ready)
+            $(@render)
         @root = <%= app_name %>
 
-    # Dynamically delegate ready to controller#action specific ready methods
-    ready: =>
-        #  Run the page specific ready code
-        @delegate_ready()
+    # Dynamically delegate render to controller#action specific render methods
+    render: =>
+        #  Run the page specific render code
+        @delegate_render()
 
         # Run the code that should run on every page.
-        @site_wide_ready()
+        @site_wide_render()
 
-    delegate_ready: =>
+    delegate_render: =>
         controller = $("[data-controller]").data("controller")
         action = $("[data-action]").data("action")
 
-        if @root[controller] && @ready_defined(@root[controller])
-            @root[controller].ready()
+        if @root[controller] && @render_defined(@root[controller])
+            @root[controller].render()
         else
-            console.info "Skipped #{@root.name}.#{controller}.ready()."
+            console.info "Skipped #{@root.name}.#{controller}.render()."
 
-        if @root[controller] && @root[controller][action] && @ready_defined(@root[controller][action])
-            @root[controller][action].ready()
-            console.info "Executed #{@root.name}.#{controller}.#{action}.ready()."
+        if @root[controller] && @root[controller][action] && @render_defined(@root[controller][action])
+            @root[controller][action].render()
+            console.info "Executed #{@root.name}.#{controller}.#{action}.render()."
         else
-            console.info "Skipped #{@root.name}.#{controller}.#{action}.ready()."
+            console.info "Skipped #{@root.name}.#{controller}.#{action}.render()."
 
-    ready_defined: (object) ->
-        object.ready != undefined
+    render_defined: (object) ->
+        object.render != undefined
 
-    site_wide_ready: ->
+    site_wide_render: ->
 
 <%= app_name %>.delegator = new SeedTray()

@@ -10,7 +10,7 @@ gem 'seed_tray'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -39,20 +39,20 @@ and `show`. You will need to add three objects in `bananas.js.coffee`:
 
 * `Fruit.Bananas.Show`
 
-In each of these objects, you need to implement the `ready` method:
+In each of these objects, you need to implement the `render` method:
 
 In app/assets/javascript/bananas.js.coffee
 ``` coffeescript
 class @Fruit.Bananas
-    @ready: ->
+    @render: ->
         # Custom coffeescript to run on every action
 
 class @Fruit.Bananas.Index
-    @ready: ->
+    @render: ->
         # Custom coffeescript for bananas#index
 
 class @Fruit.Bananas.Show
-    @ready: ->
+    @render: ->
         # Custom coffeescript for bananas#show
 ```
 
@@ -62,7 +62,7 @@ In fruit.js.coffee
 ``` coffeescript
 class @Fruit
     constructor: ->
-        Fruit.delegator.site_wide_ready = ->
+        Fruit.delegator.site_wide_render = ->
            # Do something
 ```
 
