@@ -3,8 +3,10 @@
 class SeedTray
     constructor: () ->
         if window.Turbolinks != undefined
-            $(window).on "page:change", => @ready()
-            $(window).on "turbolinks:load", => @ready()
+            if Turbolinks.EVENTS != undefined
+                $(window).on "page:change", => @ready()
+            else
+                $(window).on "turbolinks:load", => @ready()
         else
             $(@ready)
         @root = <%= app_name %>
