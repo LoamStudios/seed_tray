@@ -20,7 +20,7 @@ Or install it yourself as:
 
 SeedTray makes a couple assumptions about how you will organize your code.
 
-You need to create a object to represent your app with the same name as your 
+You need to create a object to represent your app with the same name as your
 Rails app. SeedTray will automatically use this object as the root of your view
 classes.
 
@@ -67,10 +67,11 @@ class @Fruit
 ```
 
 In application.js, require seed_tray *after* the rest of your JS is included.
-```
+``` javascript
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require_tree .
 ...
 //= require seed_tray
 ```
@@ -86,18 +87,29 @@ defined any methods or data on it:
 var app = new Fruit();
 ```
 
-Add the data attributes to the 
-```
+Add the data attributes to the
+``` html
 <body <%= page_data_attr %> >
+  ...
 </body>
 ```
 
 `page_data_attr` puts data attributes with the controller and action on your
 page. For example, if you were visiting /bananas/1, you'd get:
 
-```
+``` html
 <body data-controller='Bananas' data-action='Show' >
+  ...
 </body>
+```
+### Console Suppression
+
+By default, SeedTray will write to your browser's console when a script is executed or skipped.  Depending on your Javascript driver in your test suite, these messages may show in your testing console as well.
+
+To suppress these messages, simply add the following to the appropriate `config/environments/` file.
+ 
+``` ruby
+SeedTray.configure { |config| config.suppress_console = true }
 ```
 
 ## Namespaced Controllers
@@ -131,4 +143,3 @@ the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 ## License
 
 The gem is available as open source under the terms of the [MITLicense](http://opensource.org/licenses/MIT).
-
