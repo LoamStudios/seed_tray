@@ -1,47 +1,56 @@
 <% app_name = Rails.application.class.to_s.split('::').first %>
 
 class SeedTray
-    constructor: () ->
-        if window.Turbolinks != undefined
-            if Turbolinks.EVENTS != undefined
-                $(window).on "page:change", => @render()
-            else
-                $(window).on "turbolinks:load", => @render()
-        else
-            $(@render)
-        @root = <%= app_name %>
+  constructor: () ->
+    if window.Turbolinks != undefined
+      if Turbolinks.EVENTS != undefined
+        $(window).on "page:change", => @render()
+      else
+        $(window).on "turbolinks:load", => @render()
+    else
+      $(@render)
+    @root = <%= app_name %>
 
-    # Dynamically delegate render to controller#action specific render methods
-    render: =>
-        #  Run the page specific render code
-        @delegate_render()
+  # Dynamically delegate render to controller#action specific render methods
+  render: =>
+    # Run the code that should run on every page.
+    @delegate_sitewide_render()
 
-        # Run the code that should run on every page.
-        @site_wide_render()
+    #  Run the page specific render code
+    @delegate_render()
 
-    delegate_render: =>
-        suppress_console = <%= SeedTray.configuration.suppress_console %>
-        controller = $("[data-controller]").data("controller")
-        action = $("[data-action]").data("action")
+  delegate_render: =>
+    suppress_console = <%= SeedTray.configuration.suppress_console %>
+    controller = $("[data-controller]").data("controller")
+    action = $("[data-action]").data("action")
 
-        if @root[controller] && @render_defined(@root[controller])
-            @root[controller].render()
-        else
-          unless suppress_console
-              console.info "Skipped #{@root.name}.#{controller}.render()."
+    controllerLc = controller.toLowerCase();
+    actionLc = action.toLowerCase();
 
-        if @root[controller] && @root[controller][action] && @render_defined(@root[controller][action])
-            @root[controller][action].render()
-            unless suppress_console
-              console.info "Executed #{@root.name}.#{controller}.#{action}.render()."
+    if @root[controller] && @render_defined(@root[controller])
+      @root[controller].render()
+      $(document).trigger("seedtray:#{controller}:render")
+    else
+      unless suppress_console
+        console.info "Skipped #{@root.name}.#{controller}.render()."
 
-        else
-            unless suppress_console
-              console.info "Skipped #{@root.name}.#{controller}.#{action}.render()."
+    if @root[controller] && @root[controller][action] && @render_defined(@root[controller][action])
+      @root[controller][action].render()
+      $(document).trigger("seedtray:#{controllerLc}:#{actionLc}:render")
+      unless suppress_console
+        console.info "Executed #{@root.name}.#{controller}.#{action}.render()."
 
-    render_defined: (object) ->
-        object.render != undefined
+    else
+      unless suppress_console
+        console.info "Skipped #{@root.name}.#{controller}.#{action}.render()."
 
-    site_wide_render: ->
+  delegate_sitewide_render: =>
+    @site_wide_render()
+    $(document).trigger('seedtray:render')
+
+  render_defined: (object) ->
+    object.render != undefined
+
+  site_wide_render: ->
 
 <%= app_name %>.delegator = new SeedTray()
