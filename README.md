@@ -151,6 +151,15 @@ page. For example, if you were visiting /bananas/1, you'd get:
   ...
 </body>
 ```
+### Console Suppression
+
+By default, SeedTray will write to your browser's console when a script is executed or skipped.  Depending on your Javascript driver in your test suite, these messages may show in your testing console as well.
+
+To suppress these messages, simply add the following to the appropriate `config/environments/` file.
+
+``` ruby
+SeedTray.configure { |config| config.suppress_console = true }
+```
 
 ### Console Suppression
 
