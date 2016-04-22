@@ -7,8 +7,8 @@ require 'seed_tray/version'
 Gem::Specification.new do |spec|
   spec.name          = "seed_tray"
   spec.version       = SeedTray::VERSION
-  spec.authors       = ["Jeffrey Guenther"]
-  spec.email         = ["guenther.jeffrey@gmail.com"]
+  spec.authors       = ["Jeffrey Guenther", "Kieran Eglin"]
+  spec.email         = ["guenther.jeffrey@gmail.com", "kieran.eglin@gmail.com"]
 
   spec.summary       = %q{Custom coffeescript for your views}
   spec.description   = %q{A small, convention-based library for implementing view specific javascript.}

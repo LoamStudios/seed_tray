@@ -1,5 +1,11 @@
 # SeedTray
 
+SeedTray is a convention-based approach to page specific Javascript.
+
+## Dependencies
+
+SeedTray depends on jQuery 1.3+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -16,6 +22,18 @@ Or install it yourself as:
 
     $ gem install seed_tray
 
+In application.js, require seed_tray *after* the rest of your JS is included.
+
+``` javascript
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require_tree .
+...
+//= require seed_tray
+```
+
+
 ## Usage
 
 SeedTray makes a couple assumptions about how you will organize your code.
@@ -30,8 +48,7 @@ want to provide custom javascript.
 For example, let's say your Rails app is called `Fruit`. You need to have a
 `fruit.js.coffee` in `assets/javascript`.
 
-Let's say you have a controller named `BananasController` with actions `index`,
-and `show`. You will need to add three objects in `bananas.js.coffee`:
+Let's say you have a controller named `BananasController` with actions `index` and `show`. You will need to add three objects in `bananas.js.coffee`:
 
 * `Fruit.Bananas`
 
@@ -41,7 +58,9 @@ and `show`. You will need to add three objects in `bananas.js.coffee`:
 
 In each of these objects, you need to implement the `render` method:
 
-In app/assets/javascript/bananas.js.coffee
+### Coffeescript:
+
+In `app/assets/javascript/bananas.js.coffee`
 ``` coffeescript
 class @Fruit.Bananas
     @render: ->
@@ -58,7 +77,8 @@ class @Fruit.Bananas.Show
 
 If you want some coffeescript to run site wide:
 
-In fruit.js.coffee
+In `fruit.js.coffee`
+
 ``` coffeescript
 class @Fruit
     constructor: ->
@@ -66,15 +86,44 @@ class @Fruit
            # Do something
 ```
 
-In application.js, require seed_tray *after* the rest of your JS is included.
+### Javascript ES2015
+
+In `app/assets/javascript/bananas.(js, es6)`
 ``` javascript
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
-//= require_tree .
-...
-//= require seed_tray
+Fruit.Bananas = class Bananas {
+  static render() {
+    // Custom Javascript to run on every action
+  }
+};
+
+Fruit.Bananas.Index = class Index {
+  static render() {
+    // Custom Javascript for bananas#index
+  }
+};
+
+Fruit.Bananas.Show = class Show {
+  static render() {
+    // Custom Javascript for bananas#show
+  }
+};
 ```
+
+If you want some Javascript to run site wide:
+
+In `fruit.(js, es6)`
+
+``` javascript
+class Fruit {
+  constructor(){
+    Fruit.delegator.site_wide_render = function (){
+      // Site wide JS
+    };
+  }
+}
+
+```
+___
 
 **HEADS UP:** Make sure your application object (`Fruit` from our
 example) is added before the rest of your code or else, you will get an
@@ -107,15 +156,55 @@ page. For example, if you were visiting /bananas/1, you'd get:
 By default, SeedTray will write to your browser's console when a script is executed or skipped.  Depending on your Javascript driver in your test suite, these messages may show in your testing console as well.
 
 To suppress these messages, simply add the following to the appropriate `config/environments/` file.
- 
+
 ``` ruby
 SeedTray.configure { |config| config.suppress_console = true }
 ```
 
+### Console Suppression
+
+By default, SeedTray will write to your browser's console when a script is executed or skipped.  Depending on your Javascript driver in your test suite, these messages may show in your testing console as well.
+
+To suppress these messages, simply add the following to the appropriate `config/environments/` file.
+
+``` ruby
+SeedTray.configure { |config| config.suppress_console = true }
+```
+
+
+## Events
+
+Since SeedTray executes after a document's `ready` event fires, there are several events attached to `document` provided at various stages of the rendering cycle.
+
+#### Global:
+
+Upon rendering of any given action within any given controller, the event `seedtray:render` is fired.  Eg:
+
+``` javascript
+$(document).on('seedtray:render', function(){ ... });
+```
+
+#### Controller:
+
+Upon rendering of any action within a given controller, the event `seedtray:<controller>:render` is fired.  Eg:
+
+``` javascript
+$(document).on('seedtray:bananas:render', function(){ ... });
+```
+
+#### Action:
+
+Upon rendering of any given action, the event `seedtray:<controller>:<action>:render` is fired.  Eg:
+
+``` javascript
+$(document).on('seedtray:bananas:show:render', function(){ ... });
+```
+
+
 ## Namespaced Controllers
 
-A controller named Admin::Dashboard becomes Admin_Dashboard in the convention.
-More generally, module/word_word_controller becomes Module_WordWord. We replace
+A controller named `Admin::Dashboard` becomes `Admin_Dashboard` in the convention.
+More generally, `module/word_word_controller` becomes `Module_WordWord`. We replace
 the scope operator with an underscore and CamelCase the controller name. See the
 [helper definition](https://github.com/LoamStudios/seed_tray/blob/master/lib/seed_tray/data_attribute_helper.rb#L3)
 for the exact details.
