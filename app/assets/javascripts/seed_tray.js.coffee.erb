@@ -29,7 +29,7 @@ class SeedTray
 
     if @root[controller] && @render_defined(@root[controller])
       @root[controller].render()
-      $(document).trigger("seedtray:#{controller}:render")
+      $(document).trigger("seedtray:#{controllerLc}:render")
     else
       unless suppress_console
         console.info "Skipped #{@root.name}.#{controller}.render()."
