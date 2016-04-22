@@ -161,17 +161,6 @@ To suppress these messages, simply add the following to the appropriate `config/
 SeedTray.configure { |config| config.suppress_console = true }
 ```
 
-### Console Suppression
-
-By default, SeedTray will write to your browser's console when a script is executed or skipped.  Depending on your Javascript driver in your test suite, these messages may show in your testing console as well.
-
-To suppress these messages, simply add the following to the appropriate `config/environments/` file.
-
-``` ruby
-SeedTray.configure { |config| config.suppress_console = true }
-```
-
-
 ## Events
 
 Since SeedTray executes after a document's `ready` event fires, there are several events attached to `document` provided at various stages of the rendering cycle.
@@ -199,6 +188,10 @@ Upon rendering of any given action, the event `seedtray:<controller>:<action>:re
 ``` javascript
 $(document).on('seedtray:bananas:show:render', function(){ ... });
 ```
+
+#### Please Note:
+
+Since the events are fired in the order `sitewide -> controller -> controller#action`, each class only has access to it's event and any proceeding events (IE `controller` can access the `controller#action` delegation event, but it cannot access the `sitewide` delegation event)
 
 
 ## Namespaced Controllers
