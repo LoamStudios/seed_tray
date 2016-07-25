@@ -33,6 +33,12 @@ In application.js, require seed_tray *after* the rest of your JS is included.
 //= require seed_tray
 ```
 
+Add the data attributes to your `<body>` element
+```
+<body <%= page_data_attr %>>
+    <%= yield %>
+</body>
+```
 
 ## Usage
 
