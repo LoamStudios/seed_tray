@@ -96,19 +96,19 @@ class @Fruit
 
 In `app/assets/javascript/bananas.(js, es6)`
 ``` javascript
-Fruit.Bananas = class Bananas {
+Fruit.Bananas = class {
   static render() {
     // Custom Javascript to run on every action
   }
 };
 
-Fruit.Bananas.Index = class Index {
+Fruit.Bananas.Index = class {
   static render() {
     // Custom Javascript for bananas#index
   }
 };
 
-Fruit.Bananas.Show = class Show {
+Fruit.Bananas.Show = class {
   static render() {
     // Custom Javascript for bananas#show
   }
@@ -139,8 +139,11 @@ To finish the install, instantiate the app object in applications.js if you
 defined any methods or data on it:
 
 ``` javascript
-var app = new Fruit();
+new Fruit();
 ```
+This is particularly important if you intialize the `site_wide_render` 
+method in the object's constructor. `SeedTray` must have added the `delegator`
+before you attempt to set the value.
 
 Add the data attributes to the
 ``` html
@@ -207,18 +210,6 @@ More generally, `module/word_word_controller` becomes `Module_WordWord`. We repl
 the scope operator with an underscore and CamelCase the controller name. See the
 [helper definition](https://github.com/LoamStudios/seed_tray/blob/master/lib/seed_tray/data_attribute_helper.rb#L3)
 for the exact details.
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run
-`rake test` to run the tests. You can also run `bin/console` for an interactive
-prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
 
 ## Contributing
 
