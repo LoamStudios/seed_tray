@@ -48,7 +48,7 @@ You need to create a object to represent your app with the same name as your
 Rails app. SeedTray will automatically use this object as the root of your view
 classes.
 
-You must add an object for for each controller#action combination for which you
+You must add an object for each controller#action combination for which you
 want to provide custom javascript.
 
 For example, let's say your Rails app is called `Fruit`. You need to have a
