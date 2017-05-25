@@ -2,15 +2,15 @@
 
 class SeedTray
   constructor: () ->
+    loadEvent = undefined
     if window.Turbolinks
       loadEvent = if Turbolinks.EVENTS then 'page:change' else 'turbolinks:load';
-
-      document.addEventListener loadEvent, =>
-        @render()
     else
-      window.onload = =>
-        @render()
+      loadEvent = 'DOMContentLoaded'
 
+    document.addEventListener loadEvent, =>
+      @render()
+      
     @root = <%= app_name %>
 
   # Dynamically delegate render to controller#action specific render methods
