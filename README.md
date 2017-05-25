@@ -2,10 +2,6 @@
 
 SeedTray is a convention-based approach to page specific Javascript.
 
-## Dependencies
-
-SeedTray depends on jQuery 1.3+
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -25,8 +21,6 @@ Or install it yourself as:
 In application.js, require seed_tray *after* the rest of your JS is included.
 
 ``` javascript
-//= require jquery
-//= require jquery_ujs
 //= require turbolinks
 //= require_tree .
 ...
@@ -141,7 +135,7 @@ defined any methods or data on it:
 ``` javascript
 new Fruit();
 ```
-This is particularly important if you intialize the `site_wide_render` 
+This is particularly important if you intialize the `site_wide_render`
 method in the object's constructor. `SeedTray` must have added the `delegator`
 before you attempt to set the value.
 
