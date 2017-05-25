@@ -2,13 +2,15 @@
 
 class SeedTray
   constructor: () ->
-    if window.Turbolinks != undefined
-      if Turbolinks.EVENTS != undefined
-        $(window).on "page:change", => @render()
-      else
-        $(window).on "turbolinks:load", => @render()
+    if window.Turbolinks
+      loadEvent = if Turbolinks.EVENTS then 'page:change' else 'turbolinks:load';
+
+      document.addEventListener loadEvent, =>
+        @render()
     else
-      $(@render)
+      window.onload = =>
+        @render()
+
     @root = <%= app_name %>
 
   # Dynamically delegate render to controller#action specific render methods
@@ -21,22 +23,22 @@ class SeedTray
 
   delegate_render: =>
     suppress_console = <%= SeedTray.configuration.suppress_console %>
-    controller = $("[data-controller]").data("controller")
-    action = $("[data-action]").data("action")
+    controller = document.body.getAttribute("data-controller")
+    action = document.body.getAttribute("data-action")
 
     controllerLc = controller.toLowerCase();
     actionLc = action.toLowerCase();
 
     if @root[controller] && @render_defined(@root[controller])
       @root[controller].render()
-      $(document).trigger("seedtray:#{controllerLc}:render")
+      @trigger_event "seedtray:#{controllerLc}:render"
     else
       unless suppress_console
         console.info "Skipped #{@root.name}.#{controller}.render()."
 
     if @root[controller] && @root[controller][action] && @render_defined(@root[controller][action])
       @root[controller][action].render()
-      $(document).trigger("seedtray:#{controllerLc}:#{actionLc}:render")
+      @trigger_event "seedtray:#{controllerLc}:#{actionLc}:render"
       unless suppress_console
         console.info "Executed #{@root.name}.#{controller}.#{action}.render()."
 
@@ -46,10 +48,13 @@ class SeedTray
 
   delegate_sitewide_render: =>
     @site_wide_render()
-    $(document).trigger('seedtray:render')
+    @trigger_event 'seedtray:render'
 
   render_defined: (object) ->
     object.render != undefined
+
+  trigger_event: (evt) ->
+    document.dispatchEvent new Event(evt);
 
   site_wide_render: ->
 
