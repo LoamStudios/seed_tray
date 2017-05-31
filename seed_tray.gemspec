@@ -19,11 +19,9 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{lib,app}/**/*"]
 
   spec.add_dependency "rails", ">= 4.0"
-  spec.add_dependency 'jquery-rails'
 
   spec.add_development_dependency 'sass-rails', '~> 5.0'
   spec.add_development_dependency 'coffee-rails', '~> 4.1.0'
-  spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'turbolinks'
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "minitest-rails", "~> 2.2.0"
